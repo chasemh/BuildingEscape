@@ -20,7 +20,16 @@ void UPositionReport::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	FString ObjectName = GetOwner()->GetName();
+	FString ObjectPosition = GetOwner()->GetActorLocation().ToString();
+	FString AltPosition = GetOwner()->GetTransform().GetLocation().ToString();
+
+	// UE_LOG is a macro
+	// Text is going to LogTemp
+	// Warning => Yellow Text
+	// TEXT is also a marcro (Note all caps)
+	UE_LOG( LogTemp, Warning, TEXT( "%s is at %s" ), *ObjectName, *ObjectPosition );
+	UE_LOG( LogTemp, Warning, TEXT( "Alt: %s is at %s" ), *ObjectName, *AltPosition );
 	
 }
 
