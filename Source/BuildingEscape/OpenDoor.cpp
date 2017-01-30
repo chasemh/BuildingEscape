@@ -22,24 +22,21 @@ void UOpenDoor::BeginPlay()
 
 	// Get the player controller
 	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+	Owner = GetOwner();
+	InitialRotation = Owner->GetActorRotation();
 	
 }
 
 void UOpenDoor::OpenDoor()
 {
-	// Find the owner
-	AActor* Owner = GetOwner();
+	// Open the door
+	Owner->SetActorRotation( FRotator( 0.0f, OpenAngle, 0.0f ) );
+}
 
-	// Create a Rotator
-	// Pitch, Yaw, Role
-	FRotator NewRotation = FRotator( 0.0f, 60.0f, 0.0f );
-
-	// Set the door rotation
-	Owner->SetActorRotation( NewRotation );
-
-
-	//FRotator Rot = GetOwner()->GetActorRotation();
-	//UE_LOG( LogTemp, Warning, TEXT( "%s has rotation %s" ), *Owner, *Rot.ToString() );
+void UOpenDoor::CloseDoor()
+{
+	// Close the door
+	Owner->SetActorRotation( InitialRotation );
 }
 
 
@@ -53,9 +50,12 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 	if ( PressurePlate->IsOverlappingActor( ActorThatOpens ) ) {
 		// Open the door
 		OpenDoor();
+		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
 	}
-	
-		
-	
+
+	// Check to see if it is time to close the door
+	if ( GetWorld()->GetTimeSeconds() - LastDoorOpenTime > DoorCloseDelay ) {
+		CloseDoor();
+	}
 }
 
