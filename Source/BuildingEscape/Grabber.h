@@ -5,8 +5,18 @@
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
 
+// Stores the orientation and reach of a player
+struct PlayerOrientation
+{
+	// The Cartesian location of the origin of the player. AKA The beginning of the reach vector.
+	FVector Location;
+	// The rotation of the player.
+	FRotator Rotation;
+	// A vector representation how far and in what direction the player can reach out and grab objects. AKA The end of the reach vector.
+	FVector ReachVector;
+};
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup = (Custom), meta = (BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UGrabber : public UActorComponent
 {
 	GENERATED_BODY()
@@ -45,10 +55,13 @@ private:
 	// Release grabbed object when grab is released
 	void Release();
 
-	// Visualize pawn's reach vector
-	void ShowReachVector();
+	// Visualize pawn's reach vector in Unreal
+	void DisplayReachVector();
 
 	// Return hit for first physics body in reach
 	const FHitResult GetFirstPhysicsBodyInReach();
+
+	// Gets the player's spatial orientation and reach vector
+	const PlayerOrientation GetPlayerOrientation();
 	
 };

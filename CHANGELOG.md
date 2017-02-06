@@ -1,6 +1,10 @@
 # Change Log
 
-## 2017-2-4-2017
+## 2017-2-5 Chase Hennion
+
+* Adding work that covers lectures 82 and 83 in Section 3.
+
+## 2017-2-4 Chase Hennion
 
 * Adding work that covers lectures 77 through 81 in Section 3.
 
