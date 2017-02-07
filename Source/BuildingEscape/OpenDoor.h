@@ -39,7 +39,9 @@ private:
 
 	FRotator InitialRotation;
 
-	AActor* ActorThatOpens; // Remember Pawn inherits from Actor
 	AActor* Owner; // The owning door
+
+	// Returns the total mass in kg
+	float UOpenDoor::GetTotalMassOfActorsOnPlate();
 	
 };
