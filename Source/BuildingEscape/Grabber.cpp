@@ -58,6 +58,7 @@ void UGrabber::Grab()
 
 	// If we hit something then attach a physics handle
 	if ( ActorHit ) {
+		if ( !PhysicsHandle ) { return; }
 		PhysicsHandle->GrabComponent(
 			ComponentToGrab, // The mesh to grab
 			NAME_None, // Not dealing with skeletons so no bone name is needed
@@ -70,6 +71,7 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
+	if ( !PhysicsHandle ) { return; }
 	PhysicsHandle->ReleaseComponent();
 }
 
@@ -99,6 +101,8 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 	if ( DrawReachVector ) {
 		DisplayReachVector();
 	}
+
+	if ( !PhysicsHandle ) { return; }
 
 	// If the physics handle is attached
 	if ( PhysicsHandle->GrabbedComponent ) {

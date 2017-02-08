@@ -23,14 +23,20 @@ void UOpenDoor::BeginPlay()
 
 	// Get the player controller
 	Owner = GetOwner();
+	if ( !PressurePlate ) {
+		UE_LOG( LogTemp, Error, TEXT( "PressurePlate is not initialized! Is a trigger volume attached to %s?" ), *(Owner->GetName()) );
+		return;
+	}
 	InitialRotation = Owner->GetActorRotation();
+
 	
 }
 
 void UOpenDoor::OpenDoor()
 {
 	// Open the door
-	Owner->SetActorRotation( FRotator( 0.0f, OpenAngle, 0.0f ) );
+	// Owner->SetActorRotation( FRotator( 0.0f, OpenAngle, 0.0f ) );
+	OnOpenRequest.Broadcast();
 }
 
 void UOpenDoor::CloseDoor()
@@ -61,6 +67,8 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 float UOpenDoor::GetTotalMassOfActorsOnPlate() 
 {
 	float TotalMass = 0.0f;
+
+	if ( !PressurePlate ) { return TotalMass; }
 
 	// Find all of the overlapping actors
 	TArray<AActor*> OverlappingActors;
