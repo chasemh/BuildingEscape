@@ -1,5 +1,10 @@
 # Change Log
 
+## 2017-2-9 Chase Hennion
+
+* Adding work that covers lectures 90 through 94 in Section 3.
+* Section 3 lectures are now complete, moving on to cleaning up and improving the game.
+
 ## 2017-2-7 Chase Hennion
 
 * Adding work that covers lectures 87 through 89 in Section 3.
