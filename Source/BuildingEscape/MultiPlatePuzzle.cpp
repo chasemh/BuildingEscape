@@ -20,7 +20,7 @@ void UMultiPlatePuzzle::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Player = GetWorld()->GetFirstPlayerController()->GetOwner();
+	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	if ( !Player ) {
 		UE_LOG( LogTemp, Error, TEXT( "Could not get the first player controller actor for %s MultiPlatePuzzle!" ), *(GetOwner()->GetName()) );
@@ -52,7 +52,7 @@ void UMultiPlatePuzzle::TickComponent( float DeltaTime, ELevelTick TickType, FAc
 	// If the puzzle is solved  <-- NextPlate == PressurePlates.Num()   <-- Could probably have this in the first if statement so it isn't checked every tick
 		// Emit an event to open the door
 
-	if ( !Player || !PressurePlates[NextPlateIndex] ) { return; }
+	if ( !Player || !PressurePlates[0] || NextPlateIndex >= PressurePlates.Num() ) { return; }
 
 	int32 OverlappingPlateIndex = GetOverlappingPlateIndex();
 	if ( OverlappingPlateIndex != -1 ) {
@@ -82,6 +82,7 @@ int32 UMultiPlatePuzzle::GetOverlappingPlateIndex()
 {
 	for( int32 Index = 0; Index < PressurePlates.Num(); ++Index ) {
 		if ( PressurePlates[ Index ]->IsOverlappingActor( Player ) ) {
+			//UE_LOG( LogTemp, Warning, TEXT( "Player standing on pressure plate %s!" ), *(PressurePlates[Index]->GetName()) )
 			return Index;
 		}
 	}
