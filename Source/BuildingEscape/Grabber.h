@@ -36,6 +36,12 @@ private:
 	// How far ahead of the pawn we can reach
 	float Reach = 100.f;
 
+	// The component that is currently held.
+	UPrimitiveComponent* HeldComponent = nullptr;
+
+	UPROPERTY( EditAnywhere )
+	float ThrowImpulse = 5000.f;
+
 	// If set to true, draw the player's reach vector
 	UPROPERTY( EditAnywhere )
 	bool DrawReachVector = false;
@@ -54,6 +60,9 @@ private:
 
 	// Release grabbed object when grab is released
 	void Release();
+
+	// Throw a grabbed object
+	void Throw();
 
 	// Visualize pawn's reach vector in Unreal
 	void DisplayReachVector();

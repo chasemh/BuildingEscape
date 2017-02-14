@@ -43,7 +43,7 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 		// Open the door
 		OnOpen.Broadcast();
 	}
-	else {
+	else if ( TimedPlate ) {
 		OnClose.Broadcast();
 	}
 

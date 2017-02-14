@@ -35,6 +35,10 @@ private:
 	UPROPERTY( EditAnywhere )
 	float TriggerMass = 50.f;
 
+	// If set to true, the door willl begin to close after stepping off of the plate
+	UPROPERTY( EditAnywhere )
+    bool TimedPlate = true;
+
 	FRotator InitialRotation;
 
 	// The owning door

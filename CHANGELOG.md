@@ -1,5 +1,16 @@
 # Change Log
 
+## 2017-2-13 Chase Hennion
+
+* Added throw logic to grabber. Still need to add input component to trigger it.
+* Added last three rooms. Still need to add trigger volumes to plates.
+* Added toggle to opendoor to allow for one time door opening when a trigger volume is tripped.
+
+## 2017-2-11 Chase Hennion
+
+* Added Multiplate Puzzle actor component
+* Updated second room to use the multiplate puzzle
+
 ## 2017-2-9 Chase Hennion
 
 * Adding work that covers lectures 90 through 94 in Section 3.
