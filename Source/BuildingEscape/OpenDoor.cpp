@@ -28,6 +28,7 @@ void UOpenDoor::BeginPlay()
 		return;
 	}
 	InitialRotation = Owner->GetActorRotation();
+	InitialLocation = Owner->GetActorLocation();
 
 	
 }

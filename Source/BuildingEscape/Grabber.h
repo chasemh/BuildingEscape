@@ -40,7 +40,7 @@ private:
 	UPrimitiveComponent* HeldComponent = nullptr;
 
 	UPROPERTY( EditAnywhere )
-	float ThrowImpulse = 5000.f;
+	float ThrowImpulse = 8000.f;
 
 	// If set to true, draw the player's reach vector
 	UPROPERTY( EditAnywhere )

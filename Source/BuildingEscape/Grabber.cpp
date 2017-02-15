@@ -43,7 +43,7 @@ void UGrabber::SetupInputComponent()
 		// Read as "When input component triggered by key press (Special Enum), use this instance and invoke the method at this memory address
 		InputComponent->BindAction( "Grab", IE_Pressed, this, &UGrabber::Grab );
 		InputComponent->BindAction( "Grab", IE_Released, this, &UGrabber::Release ); 
-		// TO DO Add a component for throwing. Maybe spacebar.
+		InputComponent->BindAction( "Throw", IE_Pressed, this, &UGrabber::Throw );
 	}
 	else {
 		UE_LOG( LogTemp, Error, TEXT( "Could not find UInputComponent for %s" ), *(GetOwner()->GetName()) )
@@ -81,10 +81,13 @@ void UGrabber::Release()
 void UGrabber::Throw()
 {
 	if ( !PhysicsHandle || !HeldComponent ) { return; }
+	// "Wake up" the held component if it is stationary in the air
 	HeldComponent->WakeRigidBody( NAME_None );
+	/// Release the component and apply an impulse in the forward direction of the player's camera
 	PhysicsHandle->ReleaseComponent();
 	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetActorForwardVector();
 	HeldComponent->AddImpulse( ForwardVector * ThrowImpulse, NAME_None, false );
+	// Reset the HeldComponent pointer
 	HeldComponent = nullptr;
 }
 

@@ -41,6 +41,8 @@ private:
 
 	FRotator InitialRotation;
 
+	FVector InitialLocation;
+
 	// The owning door
 	AActor* Owner = nullptr; 
 

@@ -1,5 +1,15 @@
 # Change Log
 
+## 2017-2-14 Chase Hennion
+
+* Added input component for throwing
+* Finished sliding door logic
+* Finished throwing puzzle logic
+* Cleaned up game world
+* Cleaned up brick wall stretched texture
+* Game is now complete
+* Will now move on to cleaning up code
+
 ## 2017-2-13 Chase Hennion
 
 * Added throw logic to grabber. Still need to add input component to trigger it.
