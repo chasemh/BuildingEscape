@@ -249,4 +249,5 @@ ModelManifest.xml
 **/Saved
 
 # Exclude Unreal Starter Content
-Content/StarterContent/
+Content/StarterContent/Textures
+Content/StarterContent/HDRI
