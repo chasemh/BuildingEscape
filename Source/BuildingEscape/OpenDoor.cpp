@@ -1,8 +1,15 @@
-// Copyright Chase Hennion 2017
+/*
+Implemntation of OpenDoor.
+See OpenDoor.h for class details.
+
+Copyright Chase Hennion 2017
+*/
 
 #include "BuildingEscape.h"
 #include "OpenDoor.h"
 
+// Defining a macro that doesn't change anything
+// Currently being used as a marker for out parameters
 #define OUT
 
 // Sets default values for this component's properties
@@ -12,7 +19,6 @@ UOpenDoor::UOpenDoor()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -21,7 +27,7 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Get the player controller
+	/// Get the owning door and trigger volume
 	Owner = GetOwner();
 	if ( !PressurePlate ) {
 		UE_LOG( LogTemp, Error, TEXT( "PressurePlate is not initialized! Is a trigger volume attached to %s?" ), *(Owner->GetName()) );
@@ -29,8 +35,6 @@ void UOpenDoor::BeginPlay()
 	}
 	InitialRotation = Owner->GetActorRotation();
 	InitialLocation = Owner->GetActorLocation();
-
-	
 }
 
 
@@ -39,7 +43,7 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
-	// Poll the Trigger Volume every frame 
+	/// Poll the Trigger Volume every frame 
 	if ( GetTotalMassOfActorsOnPlate() > TriggerMass ) {
 		// Open the door
 		OnOpen.Broadcast();
@@ -56,17 +60,13 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 
 	if ( !PressurePlate ) { return TotalMass; }
 
-	// Find all of the overlapping actors
+	/// Find all of the overlapping actors
 	TArray<AActor*> OverlappingActors;
 	PressurePlate->GetOverlappingActors( OUT OverlappingActors );
 
-	// Iterate through the actors adding their masses
+	/// Iterate through the actors adding their masses
 	for ( const auto* Actor : OverlappingActors ) {
-		//UE_LOG( LogTemp, Warning, TEXT( "Actor %s on pressure plate!" ), *(Actor->GetName()) );
-
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
-
-		//UE_LOG( LogTemp, Warning, TEXT( "Total Mass in kg on Plate: %.3f" ), TotalMass );
 	}
 	
 	return TotalMass;

@@ -1,5 +1,14 @@
 # Change Log
 
+## 2017-2-19 Chase Hennion
+
+* Cleaning up BuildingEscape code
+* Adding comments to each class
+* Adding custom wall material
+* Adding SlidingWall blueprint
+* Cleaning up lighting
+* Game is ready to have an initial release
+
 ## 2017-2-14 Chase Hennion
 
 * Added input component for throwing

@@ -1,4 +1,9 @@
-// Copyright Chase Hennion 2017
+/*
+Implementation of Grabber.
+See Grabber.h for class details
+
+Copyright Chase Hennion 2017
+*/
 
 #include "BuildingEscape.h"
 #include "Grabber.h"
@@ -57,7 +62,7 @@ void UGrabber::Grab()
 	auto ComponentToGrab = HitResult.GetComponent(); // Gets the mesh we can grab
 	auto ActorHit = HitResult.GetActor();
 
-	// If we hit something then attach a physics handle
+	/// If we hit something then attach a physics handle
 	if ( ActorHit ) {
 		if ( !PhysicsHandle ) { return; }
 		PhysicsHandle->GrabComponent(
@@ -75,7 +80,8 @@ void UGrabber::Release()
 {
 	if ( !PhysicsHandle || !HeldComponent ) { return; }
 	PhysicsHandle->ReleaseComponent();
-	
+	// Reset the HeldComponent pointer since the player is no longer holding anything
+	HeldComponent = nullptr;
 }
 
 void UGrabber::Throw()
@@ -87,7 +93,7 @@ void UGrabber::Throw()
 	PhysicsHandle->ReleaseComponent();
 	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetActorForwardVector();
 	HeldComponent->AddImpulse( ForwardVector * ThrowImpulse, NAME_None, false );
-	// Reset the HeldComponent pointer
+	// Reset the HeldComponent pointer since the player is no longer holding anything
 	HeldComponent = nullptr;
 }
 

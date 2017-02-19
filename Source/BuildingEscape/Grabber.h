@@ -1,4 +1,10 @@
-// Copyright Chase Hennion 2017
+/*
+Implementation of a "Grabber" Unreal Actor component. This component allows an
+actor to grab, release and throw physics-enabled objects. This class is modified 
+from the class provided by Ben Tristem in the Udemy Unreal Course.
+
+Copyright Chase Hennion 2017
+*/
 
 #pragma once
 
@@ -33,12 +39,13 @@ public:
 
 		
 private:
-	// How far ahead of the pawn we can reach
+	// How far ahead of the pawn the player can reach.
 	float Reach = 100.f;
 
 	// The component that is currently held.
 	UPrimitiveComponent* HeldComponent = nullptr;
 
+	// The 'strength' of the player's throw
 	UPROPERTY( EditAnywhere )
 	float ThrowImpulse = 8000.f;
 
@@ -46,7 +53,10 @@ private:
 	UPROPERTY( EditAnywhere )
 	bool DrawReachVector = false;
 
+	// Player's attached Physics Handle
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+
+	// Attached Input Component to allow for method invocation when certain keys are pressed
 	UInputComponent* InputComponent = nullptr;
 
 	// Find and set the PhysicsHandle
@@ -55,19 +65,19 @@ private:
 	// Find and setup the (assumed) attached InputComponent
 	void SetupInputComponent();
 
-	// Ray-cast and grab what is within reach
+	// Ray-cast and grab what is within reach when grab key is prssed
 	void Grab();
 
-	// Release grabbed object when grab is released
+	// Release grabbed object when grab key is released
 	void Release();
 
 	// Throw a grabbed object
 	void Throw();
 
-	// Visualize pawn's reach vector in Unreal
+	// Visualize player's reach vector in Unreal
 	void DisplayReachVector();
 
-	// Return hit for first physics body in reach
+	// Get the first physics body within the player's reach
 	const FHitResult GetFirstPhysicsBodyInReach();
 
 	// Gets the player's spatial orientation and reach vector

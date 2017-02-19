@@ -1,4 +1,9 @@
-// Copyright Chase Hennion 2017
+/*
+Implementation of MultiPlatePuzzle.
+See MultiPlatePuzzle.h for class details
+
+Copyright Chase Hennion 2017
+*/
 
 #include "BuildingEscape.h"
 #include "MultiPlatePuzzle.h"
@@ -20,6 +25,7 @@ void UMultiPlatePuzzle::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Get the player actor
 	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	if ( !Player ) {
@@ -41,35 +47,25 @@ void UMultiPlatePuzzle::TickComponent( float DeltaTime, ELevelTick TickType, FAc
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
-	// If player is overlapping the correct volume in the puzzle
-		// Increment NextPlate
-		// Emit an event so a sound is played
-	// Else if the player is overlapping another, incorrect volume
-		// Only check for the next plates in the puzzle so if the player hits a plate that they have already used, it doesn't reset the puzzle.
-		// Reset the Puzzle
-		// Set NextPlate to 0 
-		// Emit an event so a sound can be played
-	// If the puzzle is solved  <-- NextPlate == PressurePlates.Num()   <-- Could probably have this in the first if statement so it isn't checked every tick
-		// Emit an event to open the door
-
 	if ( !Player || !PressurePlates[0] || NextPlateIndex >= PressurePlates.Num() ) { return; }
 
 	int32 OverlappingPlateIndex = GetOverlappingPlateIndex();
 	if ( OverlappingPlateIndex != -1 ) {
 		if ( OverlappingPlateIndex == NextPlateIndex ) {
-			// Stepped on the right plate
+			/// Stepped on the right plate
 			NextPlateIndex++;
 			if ( NextPlateIndex == PressurePlates.Num() ) {
-				//Puzzle has been solved
+				// Puzzle has been solved
 				// Emit an event to open the door
 				OnSolved.Broadcast();
 			}
 			else {
+				// The next correct plate has been intersected. Emit an event to play a sound.
 				OnCorrectPlate.Broadcast();
 			}
 		}
 		else if ( OverlappingPlateIndex > NextPlateIndex ) {
-			// Stepped on the wrong plate
+			/// Stepped on a wrong plate
 			// Reset the Puzzle
 			NextPlateIndex = 0;
 			// Emit a event to play a sound
@@ -82,7 +78,6 @@ int32 UMultiPlatePuzzle::GetOverlappingPlateIndex()
 {
 	for( int32 Index = 0; Index < PressurePlates.Num(); ++Index ) {
 		if ( PressurePlates[ Index ]->IsOverlappingActor( Player ) ) {
-			//UE_LOG( LogTemp, Warning, TEXT( "Player standing on pressure plate %s!" ), *(PressurePlates[Index]->GetName()) )
 			return Index;
 		}
 	}
